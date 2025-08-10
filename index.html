@@ -1,125 +1,77 @@
 <!DOCTYPE html>
+
+<html lang="en">
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Cyberpunk Glitch Background</title>
-<style>
-  /* Full page black background */
-  body, html {
-    margin: 0; padding: 0; height: 100%; overflow: hidden;
-    background: linear-gradient(135deg, #1a0029, #44005e);
-    font-family: 'Oxanium', cursive, sans-serif;
-  }
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  /* Neon flicker gradient behind canvas */
-  #neon-bg {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100vw; height: 100vh;
-    background: linear-gradient(270deg, #ff00ff, #00ffff, #ff00ff);
-    background-size: 600% 600%;
-    animation: neonPulse 6s ease-in-out infinite;
-    z-index: 0;
-    filter: brightness(1.2) contrast(1.1);
-  }
+  <!-- Google Fonts: Oxanium -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Oxanium&display=swap"
+    rel="stylesheet"
+  />
 
-  @keyframes neonPulse {
-    0%, 100% {background-position: 0% 50%;}
-    50% {background-position: 100% 50%;}
-  }
+  <link
+    rel="preload"
+    href="/_next/static/media/66f30814ff6d7cdf.p.woff2"
+    as="font"
+    crossorigin=""
+    type="font/woff2"
+  />
+  <link
+    rel="preload"
+    href="/_next/static/media/e11418ac562b8ac1-s.p.woff2"
+    as="font"
+    crossorigin=""
+    type="font/woff2"
+  />
+  <link
+    rel="stylesheet"
+    href="/_next/static/css/69093cbbd87c8798.css"
+    data-precedence="next"
+  />
+  <link
+    rel="preload"
+    as="script"
+    fetchpriority="low"
+    href="/_next/static/chunks/webpack-3fdcabb88c453925.js"
+  />
+  <script src="/_next/static/chunks/89b01fbc-fd1e7f5eaaaef23c.js" async></script>
+  <script src="/_next/static/chunks/331-55292b57fb590cf7.js" async></script>
+  <script src="/_next/static/chunks/main-app-a72ee96bca79db65.js" async></script>
+  <script src="/_next/static/chunks/9d3ce21c-833a02fbcb05c491.js" async></script>
+  <script src="/_next/static/chunks/app/page-9b7c7a667b8c96b7.js" async></script>
+  <meta name="next-size-adjust" content="" />
 
-  /* Canvas covers full screen */
-  #glitch-canvas {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100vw; height: 100vh;
-    z-index: 1;
-    pointer-events: none;
-  }
-</style>
+  <title>FALCON AI - Trade with Arohi</title>
+  <meta name="description" content="Trade with Arohi - FALCON AI" />
+  <meta name="generator" content="v0.dev" />
+
+  <style>
+    html {
+      font-family: 'Oxanium', cursive, 'GeistSans', 'GeistSans Fallback';
+      --font-sans: __variable_3a0388;
+      --font-mono: __variable_c1e5c9;
+    }
+  </style>
+
+  <script src="/_next/static/chunks/polyfills-42372ed130431b0a.js" nomodule></script>
 </head>
-<body>
 
-<div id="neon-bg"></div>
-<canvas id="glitch-canvas"></canvas>
 
-<script>
-  const canvas = document.getElementById('glitch-canvas');
-  const ctx = canvas.getContext('2d');
+  <body><main class="min-h-screen bg-black text-white"><div class="relative min-h-screen w-full overflow-hidden"><div class="absolute inset-0 z-0">
+          <div style="position:relative;width:100%;height:100%;overflow:hidden;pointer-events:auto">
+            <div style="width:100%;height:100%"><canvas style="display: block; width: 800px; height: 1220px;" data-engine="three.js r179" width="800" height="1220">
 
-  let w, h;
-  function resize() {
-    w = canvas.width = window.innerWidth;
-    h = canvas.height = window.innerHeight;
-  }
-  resize();
-  window.addEventListener('resize', resize);
-
-  // Utility: random integer in range
-  function randInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  }
-
-  // Draw glitch scan lines and flickers
-  function drawGlitch() {
-    ctx.clearRect(0, 0, w, h);
-
-    // Noise overlay (subtle static)
-    const imageData = ctx.createImageData(w, h);
-    for (let i = 0; i < imageData.data.length; i += 4) {
-      const val = randInt(0, 15);
-      imageData.data[i] = val;       // R low brightness
-      imageData.data[i+1] = 0;       // G zero for purple tint
-      imageData.data[i+2] = val;     // B low brightness
-      imageData.data[i+3] = 15;      // alpha low opacity
-    }
-    ctx.putImageData(imageData, 0, 0);
-
-    // Draw flickering horizontal glitch bars
-    const glitchCount = randInt(3, 7);
-    for(let i = 0; i < glitchCount; i++) {
-      const y = randInt(0, h);
-      const height = randInt(2, 6);
-      const x = randInt(0, w / 2);
-      const width = randInt(w / 3, w);
-
-      // Flickering pinkish glitch bar
-      ctx.fillStyle = `rgba(255,0,255,${Math.random() * 0.4 + 0.2})`;
-      ctx.fillRect(x, y, width, height);
-
-      // Draw thin white horizontal lines inside glitch bar for scanline effect
-      ctx.strokeStyle = `rgba(255,255,255,${Math.random() * 0.3 + 0.1})`;
-      ctx.lineWidth = 1;
-      for(let ly = y; ly < y + height; ly += 2) {
-        ctx.beginPath();
-        ctx.moveTo(x, ly);
-        ctx.lineTo(x + width, ly);
-        ctx.stroke();
-      }
-    }
-
-    // Vertical scan lines
-    const lineCount = 50;
-    for(let i = 0; i < lineCount; i++) {
-      const x = (w / lineCount) * i + (Math.sin(Date.now() / 500 + i) * 5);
-      ctx.strokeStyle = `rgba(255,0,255,0.02)`;
-      ctx.lineWidth = 1;
-      ctx.beginPath();
-      ctx.moveTo(x, 0);
-      ctx.lineTo(x, h);
-      ctx.stroke();
-    }
-  }
-
-  // Animate
-  function animate() {
-    drawGlitch();
-    requestAnimationFrame(animate);
-  }
-
-  animate();
-</script>
-
-</body>
-</html>
+            </canvas></div></div></div><div class="relative z-10 flex flex-col items-center justify-center min-h-screen p-4 sm:p-6 md:p-8"><header class="w-full max-w-6xl mx-auto flex justify-center items-center py-6">
+              <img alt="Trade with Arohi Logo" loading="lazy" width="250" height="150" decoding="async" data-nimg="1" class="object-contain" style="color:transparent" src="/logo.png"></header>
+              <main class="flex-grow flex flex-col items-center justify-center w-full max-w-6xl mx-auto text-center py-12">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4 text-shadow-lg">Your Gateway to Advanced Trading</h1>
+                <p class="text-lg md:text-xl text-gray-300 max-w-3xl mb-12">Choose your preferred tool and elevate your trading strategy with cutting-edge AI and automated signals.</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full">
+                  <div data-slot="card" class="text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm bg-gray-900/50 border-green-500/50 backdrop-blur-sm transform hover:scale-105 transition-transform duration-300"><div data-slot="card-header" class="@container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start gap-1.5 px-6 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6"><div data-slot="card-title" class="text-2xl font-bold text-green-400">FALCON AI</div>
+                    <div data-slot="card-description" class="text-sm text-gray-400">Intelligent market analysis</div></div><div data-slot="card-content" class="px-6"><p>Harness the power of our core AI to get predictive signals and market insights. Ideal for traders who value data-driven decisions.</p></div><div data-slot="card-footer" class="flex items-center px-6 [.border-t]:pt-6"><button data-slot="button" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg:not([class*='size-'])]:size-4 shrink-0 [&amp;_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive shadow-xs h-9 px-4 py-2 has-[&gt;svg]:px-3 w-full bg-green-500 hover:bg-green-600 text-black font-bold">Get Started <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right ml-2 h-4 w-4"><path d="M5 12h14"></path>
+                      <path d="m12 5 7 7-7 7"></path></svg></button></div></div><div data-slot="card" class="text-card-foreground flex flex-col gap-6 rounded-xl py-6 shadow-sm bg-gray-900/50 border-red-500/50 backdrop-blur-sm transform hover:scale-105 transition-transform duration-300 scale-105 border-2"><div class="absolute -top-4 right-4 bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full">PRO</div>
+                        <div data-slot="card-header" class="@container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start gap-1.5 px-6 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6"><div data-slot="card-title" class="text-2xl font-bold text-red-400">FALCON AI LIVE PRO MAX</div><div data-slot="card-description" class="text-sm text-gray-400">Real-time professional signals</div></div><div data-slot="card-content" class="px-6"><p>Experience live, high-frequency signals with our pro-tier AI. For serious traders demanding speed and premium features.</p></div><div data-slot="card-footer" class="flex items-center px-6 [.border-t]:pt-6"><button data-slot="button" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg:not([class*='size-'])]:size-4 shrink-0 [&amp;_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive shadow-xs h-9 px-4 py-2 has-[&gt;svg]:px-3 w-full bg-red-500 hover:bg-red-600 text-white font-bold">Go Pro <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right ml-2 h-4 w-4"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></button></div></div><div data-slot="card" class="text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm bg-gray-900/50 border-blue-500/50 backdrop-blur-sm transform hover:scale-105 transition-transform duration-300"><div data-slot="card-header" class="@container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start gap-1.5 px-6 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6"><div data-slot="card-title" class="text-2xl font-bold text-blue-400">SIGNAL BOT</div><div data-slot="card-description" class="text-sm text-gray-400">Automated trading assistant</div></div><div data-slot="card-content" class="px-6"><p>Let our bot handle the signals. Fully automated and easy to set up, it's perfect for traders who want to be hands-off.</p></div><div data-slot="card-footer" class="flex items-center px-6 [.border-t]:pt-6"><button data-slot="button" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg:not([class*='size-'])]:size-4 shrink-0 [&amp;_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive shadow-xs h-9 px-4 py-2 has-[&gt;svg]:px-3 w-full bg-blue-500 hover:bg-blue-600 text-white font-bold">Activate Bot <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right ml-2 h-4 w-4"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></button></div></div></div></main><footer class="w-full max-w-6xl mx-auto text-center py-6"><div class="flex justify-center space-x-4 mt-8"><a href="https://t.me/traderarohi2" target="_blank" rel="noopener noreferrer"><button data-slot="button" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg:not([class*='size-'])]:size-4 shrink-0 [&amp;_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive hover:bg-accent dark:hover:bg-accent/50 size-9 text-gray-400 hover:text-blue-500 transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-send h-6 w-6"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"></path><path d="m21.854 2.147-10.94 10.939"></path></svg><span class="sr-only">Telegram</span></button></a><a href="https://youtube.com/" target="_blank" rel="noopener noreferrer"><button data-slot="button" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg:not([class*='size-'])]:size-4 shrink-0 [&amp;_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive hover:bg-accent dark:hover:bg-accent/50 size-9 text-gray-400 hover:text-red-500 transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-youtube h-6 w-6"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"></path><path d="m10 15 5-3-5-3z"></path></svg><span class="sr-only">YouTube</span></button></a><a href="https://www.tiktok.com/@traderarohi" target="_blank" rel="noopener noreferrer"><button data-slot="button" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg:not([class*='size-'])]:size-4 shrink-0 [&amp;_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive hover:bg-accent dark:hover:bg-accent/50 size-9 text-gray-400 hover:text-purple-500 transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-twitter h-6 w-6"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path></svg><span class="sr-only">TikTok</span></button></a></div> <p class="text-gray-500 mt-4">© <!-- -->2025<!-- --> Trade with Arohi. All Rights Reserved.</p></footer></div></div></main><script src="/_next/static/chunks/webpack-3fdcabb88c453925.js" async=""></script><script>(self.__next_f=self.__next_f||[]).push([0])</script><script>self.__next_f.push([1,"1:\"$Sreact.fragment\"\n2:I[7940,[],\"\"]\n3:I[482,[],\"\"]\n4:I[8623,[\"59\",\"static/chunks/9d3ce21c-833a02fbcb05c491.js\",\"685\",\"static/chunks/9b9f665e-83c78b87622dc55e.js\",\"912\",\"static/chunks/2ef6b231-2bba7b1b815e5975.js\",\"117\",\"static/chunks/117-722c91ed2632ee41.js\",\"974\",\"static/chunks/app/page-9b7c7a667b8c96b7.js\"],\"default\"]\n5:I[8532,[],\"OutletBoundary\"]\n8:I[8532,[],\"ViewportBoundary\"]\na:I[8532,[],\"MetadataBoundary\"]\nc:I[9867,[],\"\"]\n:HL[\"/_next/static/media/66f30814ff6d7cdf.p.woff2\",\"font\",{\"crossOrigin\":\"\",\"type\":\"font/woff2\"}]\n:HL[\"/_next/static/media/e11418ac562b8ac1-s.p.woff2\",\"font\",{\"crossOrigin\":\"\",\"type\":\"font/woff2\"}]\n:HL[\"/_next/static/css/69093cbbd87c8798.css\",\"style\"]\n"])</script><script>self.__next_f.push([1,"0:{\"P\":null,\"b\":\"Ms5b04Lu027vtuxR9Ss-Z\",\"p\":\"\",\"c\":[\"\",\"\"],\"i\":false,\"f\":[[[\"\",{\"children\":[\"__PAGE__\",{}]},\"$undefined\",\"$undefined\",true],[\"\",[\"$\",\"$1\",\"c\",{\"children\":[[[\"$\",\"link\",\"0\",{\"rel\":\"stylesheet\",\"href\":\"/_next/static/css/69093cbbd87c8798.css\",\"precedence\":\"next\",\"crossOrigin\":\"$undefined\",\"nonce\":\"$undefined\"}]],[\"$\",\"html\",null,{\"lang\":\"en\",\"children\":[[\"$\",\"head\",null,{\"children\":[\"$\",\"style\",null,{\"children\":\"\\nhtml {\\n  font-family: 'GeistSans', 'GeistSans Fallback';\\n  --font-sans: __variable_3a0388;\\n  --font-mono: __variable_c1e5c9;\\n}\\n        \"}]}],[\"$\",\"body\",null,{\"children\":[\"$\",\"$L2\",null,{\"parallelRouterKey\":\"children\",\"error\":\"$undefined\",\"errorStyles\":\"$undefined\",\"errorScripts\":\"$undefined\",\"template\":[\"$\",\"$L3\",null,{}],\"templateStyles\":\"$undefined\",\"templateScripts\":\"$undefined\",\"notFound\":[[[\"$\",\"title\",null,{\"children\":\"404: This page could not be found.\"}],[\"$\",\"div\",null,{\"style\":{\"fontFamily\":\"system-ui,\\\"Segoe UI\\\",Roboto,Helvetica,Arial,sans-serif,\\\"Apple Color Emoji\\\",\\\"Segoe UI Emoji\\\"\",\"height\":\"100vh\",\"textAlign\":\"center\",\"display\":\"flex\",\"flexDirection\":\"column\",\"alignItems\":\"center\",\"justifyContent\":\"center\"},\"children\":[\"$\",\"div\",null,{\"children\":[[\"$\",\"style\",null,{\"dangerouslySetInnerHTML\":{\"__html\":\"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}\"}}],[\"$\",\"h1\",null,{\"className\":\"next-error-h1\",\"style\":{\"display\":\"inline-block\",\"margin\":\"0 20px 0 0\",\"padding\":\"0 23px 0 0\",\"fontSize\":24,\"fontWeight\":500,\"verticalAlign\":\"top\",\"lineHeight\":\"49px\"},\"children\":404}],[\"$\",\"div\",null,{\"style\":{\"display\":\"inline-block\"},\"children\":[\"$\",\"h2\",null,{\"style\":{\"fontSize\":14,\"fontWeight\":400,\"lineHeight\":\"49px\",\"margin\":0},\"children\":\"This page could not be found.\"}]}]]}]}]],[]],\"forbidden\":\"$undefined\",\"unauthorized\":\"$undefined\"}]}]]}]]}],{\"children\":[\"__PAGE__\",[\"$\",\"$1\",\"c\",{\"children\":[[\"$\",\"main\",null,{\"className\":\"min-h-screen bg-black text-white\",\"children\":[\"$\",\"$L4\",null,{}]}],\"$undefined\",null,[\"$\",\"$L5\",null,{\"children\":[\"$L6\",\"$L7\",null]}]]}],{},null,false]},null,false],[\"$\",\"$1\",\"h\",{\"children\":[null,[\"$\",\"$1\",\"w96T-KcpdVdsqRW4B6Gol\",{\"children\":[[\"$\",\"$L8\",null,{\"children\":\"$L9\"}],[\"$\",\"meta\",null,{\"name\":\"next-size-adjust\",\"content\":\"\"}]]}],[\"$\",\"$La\",null,{\"children\":\"$Lb\"}]]}],false]],\"m\":\"$undefined\",\"G\":[\"$c\",\"$undefined\"],\"s\":false,\"S\":true}\n"])</script><script>self.__next_f.push([1,"9:[[\"$\",\"meta\",\"0\",{\"charSet\":\"utf-8\"}],[\"$\",\"meta\",\"1\",{\"name\":\"viewport\",\"content\":\"width=device-width, initial-scale=1\"}]]\n6:null\n"])</script><script>self.__next_f.push([1,"7:null\nb:[[\"$\",\"title\",\"0\",{\"children\":\"v0 App\"}],[\"$\",\"meta\",\"1\",{\"name\":\"description\",\"content\":\"Created with v0\"}],[\"$\",\"meta\",\"2\",{\"name\":\"generator\",\"content\":\"v0.dev\"}]]\n"])</script><next-route-announcer style="position: absolute;"></next-route-announcer></body></html>
